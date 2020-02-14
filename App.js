@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput,Alert,Animated} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput,Alert,Animated,Image} from 'react-native';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -23,6 +23,7 @@ export default class App extends Component<Props> {
           <TextInput style={styles.welcome} onBlur={this._onBlur}
           onFocus={this._onFocus}
           onChangeText={(text) => { this.emailIsValid(text)}}></TextInput>
+          <Image style={{ height:25,width:25, position : 'absolute' , right : 10, top : 8 }}source={require('./src/images/arrow.png')}></Image>
         </View>
 
       </View>
@@ -32,6 +33,10 @@ export default class App extends Component<Props> {
    emailIsValid = (email) =>  {
     console.log(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
     /*return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)*/
+  }
+
+  startAnimation = () => {
+
   }
 
 }
