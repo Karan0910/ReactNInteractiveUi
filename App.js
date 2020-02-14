@@ -15,6 +15,27 @@ export default class App extends Component<Props> {
     //super(props);
     this.state={emailValid:false};
   }
+
+  state = {
+    fadeIn: new Animated.Value(0),
+    fadeOut : new Animated.Value(1)
+  };
+
+  _startIn = () => {
+    Animated.timing(this.state.fadeIn, {
+      toValue: 1,
+      duration: 1000
+    }).start();
+  };
+
+
+  _startOut = () => {
+    Animated.timing(this.state.fadeOut, {
+      toValue: 0,
+      duration: 1000
+    }).start();
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -23,21 +44,37 @@ export default class App extends Component<Props> {
           <TextInput style={styles.welcome} onBlur={this._onBlur}
           onFocus={this._onFocus}
           onChangeText={(text) => { this.emailIsValid(text)}}></TextInput>
-          <Image style={{ height:25,width:25, position : 'absolute' , right : 10, top : 8 }}source={require('./src/images/arrow.png')}></Image>
-        </View>
+          <Animated.View style={{ opacity :this.state.fadeIn,height:25,width:25, position : 'absolute' , right : 10, top : 8 }}>
+              <Image source={require('./src/images/arrow.png')}></Image>
+          </Animated.View>  
+          </View>
 
       </View>
     );
   }
 
    emailIsValid = (email) =>  {
-    console.log(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+    
+    if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    {
+      console.log(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+      this._startIn();
+      this.setState({
+        fadeIn : new Animated.Value(1)
+        });
+    }
+    else {
+      console.log("hi");
+      
+      this._startOut();
+      this.setState({
+        fadeIn : new Animated.Value(0)
+        });
+    }
     /*return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)*/
   }
 
-  startAnimation = () => {
-
-  }
+  
 
 }
 
